@@ -21,7 +21,6 @@
       --radius: 18px;
       --accent: #3b82f6;
       --thead: #eef6ff;
-      /* เพิ่มตัวแปรสำหรับแอนิเมชัน */
       --dur: 280ms;
       --ease: cubic-bezier(.4,0,.2,1);
     }
@@ -86,10 +85,12 @@
 
     .swatch{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; border:1px solid rgba(0,0,0,.06)}
     .swatch svg{ color:#334155 }
+
     /* Light swatch vibrant */
     button[data-key="morningOT"] .swatch{ background:#b9ddff }
     button[data-key="morningNoOT"] .swatch{ background:#bff7d0 }
     button[data-key="night"] .swatch{ background:#dac5ff }
+    button[data-key="nightNoOT"] .swatch{ background:#dac5ff }
     button[data-key="sundayLight"] .swatch{ background:#ffe2a8 }
     button[data-key="dayOffFull"] .swatch{ background:#ffd1e2 }
 
@@ -97,13 +98,13 @@
     body.dark button[data-key="morningOT"] .swatch{ background:#3b82f6; border:1px solid rgba(255,255,255,.25) }
     body.dark button[data-key="morningNoOT"] .swatch{ background:#22c55e; border:1px solid rgba(255,255,255,.25) }
     body.dark button[data-key="night"] .swatch{ background:#a855f7; border:1px solid rgba(255,255,255,.25) }
+    body.dark button[data-key="nightNoOT"] .swatch{ background:#a855f7; border:1px solid rgba(255,255,255,.25) }
     body.dark button[data-key="sundayLight"] .swatch{ background:#f59e0b; border:1px solid rgba(255,255,255,.25) }
     body.dark button[data-key="dayOffFull"] .swatch{ background:#ec4899; border:1px solid rgba(255,255,255,.25) }
     body.dark .swatch svg{ color:#fff; filter: drop-shadow(0 1px 1px rgba(0,0,0,.65)); }
 
     .iconBtn .label{display:flex; flex-direction:column}
     .iconBtn .label strong{font-size:14.5px}
-    .iconBtn .label span{font-size:12px; color:var(--muted)}
 
     .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px }
     .titleRow{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap }
@@ -127,7 +128,7 @@
     body.dark .rowInputs input{ background:#1c1d22; border:1px solid rgba(255,255,255,.14); color:var(--text) }
     .smallBtn{ padding:6px 10px; border-radius:10px }
 
-    .dock{ position:sticky; bottom:0; z-index:15; display:grid; grid-template-columns:repeat(5,1fr); gap:8px; padding:10px; }
+    .dock{ position:sticky; bottom:0; z-index:15; display:grid; grid-template-columns:repeat(6,1fr); gap:8px; padding:10px; }
     .dock .iconBtn{ justify-content:center; padding:10px; }
     .dock .iconBtn .label{ display:none }
     .dock .iconBtn .swatch{ width:42px; height:42px }
@@ -147,7 +148,7 @@
       radial-gradient(700px 320px at 90% -5%, rgba(236,72,153,.10) 0%, transparent 60%),
       var(--bg); }
 
-    /* ===== เพิ่มแอนิเมชัน (ไม่มีการเปลี่ยนโครงสร้าง UI) ===== */
+    /* Animations */
     @media (prefers-reduced-motion: reduce) {
       .anim-enter, .anim-leave, .swatchPulse { animation: none !important; transition: none !important; }
     }
@@ -221,23 +222,23 @@
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-moon"/></svg></div>
         <div class="label"><strong>กะดึก</strong></div>
       </button>
-      <button class="iconBtn" data-key="night">
+      <button class="iconBtn" data-key="nightNoOT">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-moon"/></svg></div>
         <div class="label"><strong>กะดึก (ไม่มีโอที)</strong></div>
       </button>
       <button class="iconBtn" data-key="sundayLight">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-feather"/></svg></div>
-        <div class="label"><strong>วันหยุด (กะดึก)</strong></div>
+        <div class="label"><strong>อาทิตย์ (เบา)</strong></div>
       </button>
       <button class="iconBtn" data-key="dayOffFull">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-book"/></svg></div>
-        <div class="label"><strong>วันหยุด (กะเช้า)</strong><span>เวอร์ชันเต็ม</span></div>
+        <div class="label"><strong>วันหยุดปกติ</strong></div>
       </button>
     </aside>
 
     <section class="card" id="content" aria-live="polite">
       <div class="titleRow">
-        <h2 id="title">กะเช้า (มีโอที)</h2>
+        <h2 id="title">กะเช้า (มีโอที 18:15)</h2>
         <div style="display:flex; gap:8px">
           <button class="ghost editBtn" id="editBtn"><svg width="18" height="18" style="vertical-align:-3px"><use href="#i-edit"/></svg> แก้ไข</button>
         </div>
@@ -268,13 +269,13 @@
     <button class="iconBtn" data-key="night" aria-label="กะดึก">
       <div class="swatch"><svg width="22" height="22"><use href="#i-moon"/></svg></div>
     </button>
-    <button class="iconBtn" data-key="night" aria-label="กะดึก ไม่มีโอที">
+    <button class="iconBtn" data-key="nightNoOT" aria-label="กะดึก ไม่มีโอที">
       <div class="swatch"><svg width="22" height="22"><use href="#i-moon"/></svg></div>
     </button>
-    <button class="iconBtn" data-key="sundayLight" aria-label="หยุดกะดึก">
+    <button class="iconBtn" data-key="sundayLight" aria-label="วันอาทิตย์ เบา">
       <div class="swatch"><svg width="22" height="22"><use href="#i-feather"/></svg></div>
     </button>
-    <button class="iconBtn" data-key="dayOffFull" aria-label="หยุดกะเช้า">
+    <button class="iconBtn" data-key="dayOffFull" aria-label="วันหยุดปกติ">
       <div class="swatch"><svg width="22" height="22"><use href="#i-book"/></svg></div>
     </button>
   </nav>
@@ -289,10 +290,10 @@
         ['04:25 – 05:30','เตรียมตัวไปทำงาน'],['06:00 – 18:15','ทำงาน'],['19:15','ถึงห้อง'],['19:30 – 19:45','สมาธิ'],['19:50 – 20:10','โปรเจกต์เล็ก (แต่งเรื่อง/โค้ด/ฝึกพูด สลับวัน)'],['20:10 – 20:30','เกม/พัก'],['20:30 – 20:45','เขียนบันทึก'],['21:00 เป็นต้นไป','พัก/นอน'],] },
       morningNoOT: { theme: 'morningNoOT', title: 'กะเช้า (ไม่มีโอที 14:15)', rows: [
         ['04:25 – 05:30','เตรียมตัวไปทำงาน'],['06:00 – 14:15','ทำงาน'],['15:15','ถึงห้อง'],['15:30 – 15:45','สมาธิ'],['15:50 – 16:20','โปรเจกต์เล็ก (แต่งเรื่อง/โค้ด/ฝึกพูด)'],['16:20 – 17:00','พัก/เกม'],['17:00 – 17:30','ฝึกพูด (สั้นๆ)'],['17:30 – 18:00','เกม/พักสายตา'],['18:00 – 18:30','VS Code / โค้ดเล็กๆ'],['18:30 – 19:00','กินข้าว/พัก'],['19:00 – 19:30','เขียนบันทึก'],['19:30 เป็นต้นไป','พัก/กิจกรรมเบา → เข้านอน'],] },
-      nightOT: { theme: 'night', title: 'กะดึก (18:00 – 06:15)', rows: [
+      night: { theme: 'night', title: 'กะดึก (18:00 – 06:15)', rows: [
         ['16:25 – 17:30','เตรียมตัวไปทำงาน'],['18:00 – 06:15','ทำงาน'],['07:15','ถึงห้อง'],['07:20 – 07:35','สมาธิ'],['07:35 – 07:55','โปรเจกต์เล็ก (บันทึก/จดไอเดีย 2–3 บรรทัด)'],['08:00 – 08:30','อาบน้ำ/เตรียมตัวนอน'],['08:30 – 15:00','นอนยาว'],['15:00 – 16:00','ตื่น/พัก/กินข้าว'],['16:00 – 18:00','พักผ่อนเบาๆ (ฟังเพลง เกมมือถือ)'],['18:00 เป็นต้นไป','วันธรรมดา → เริ่มกะดึกใหม่ | วันเสาร์ → เข้าตารางวันอาทิตย์'],] },
-       nightNoOT: { theme: 'night', title: 'กะดึก (18:00 – 06:15)', rows: [
-        ['16:25 – 17:30','เตรียมตัวไปทำงาน'],['18:00 – 06:15','ทำงาน'],['07:15','ถึงห้อง'],['07:20 – 07:35','สมาธิ'],['07:35 – 07:55','โปรเจกต์เล็ก (บันทึก/จดไอเดีย 2–3 บรรทัด)'],['08:00 – 08:30','อาบน้ำ/เตรียมตัวนอน'],['08:30 – 15:00','นอนยาว'],['15:00 – 16:00','ตื่น/พัก/กินข้าว'],['16:00 – 18:00','พักผ่อนเบาๆ (ฟังเพลง เกมมือถือ)'],['18:00 เป็นต้นไป','วันธรรมดา → เริ่มกะดึกใหม่ | วันเสาร์ → เข้าตารางวันอาทิตย์'],] },
+      nightNoOT: { theme: 'night', title: 'กะดึก (ไม่มีโอที 06:00)', rows: [
+        ['16:25 – 17:30','เตรียมตัวไปทำงาน'],['18:00 – 06:00','ทำงาน'],['07:00','ถึงห้อง'],['07:05 – 07:20','สมาธิ'],['07:20 – 07:40','โปรเจกต์เล็ก (บันทึก/จดไอเดีย 2–3 บรรทัด)'],['07:40 – 08:10','อาบน้ำ/เตรียมตัวนอน'],['08:10 – 15:00','นอนยาว'],['15:00 – 16:00','ตื่น/พัก/กินข้าว'],['16:00 – 18:00','พักผ่อนเบาๆ (ฟังเพลง เกมมือถือ)'],['18:00 เป็นต้นไป','วันธรรมดา → เริ่มกะดึกใหม่ | วันเสาร์ → เข้าตารางวันอาทิตย์'],] },
       sundayLight: { theme: 'sundayLight', title: 'วันอาทิตย์ (หลังเลิกกะดึก – เบา)', rows: [
         ['07:15 – 07:30','สมาธิสั้นๆ + อาบน้ำ'],['07:30 – 14:30','นอนยาวพักร่าง'],['14:30 – 15:00','ตื่น/กินข้าว'],['15:00 – 16:00','กิจกรรมเบาๆ (ยืดเส้น, ฟังเพลง, เกม)'],['16:00 – 17:00','แต่งเรื่องเล็กๆ (เพิ่มฉากเดียวหรือไอเดียสั้นๆ)'],['17:00 – 18:00','เกม/พัก'],['18:00 – 19:00','ฝึกพูดสั้นๆ 2–3 ประโยค'],['19:00 – 20:00','VS Code / โค้ดเล็กๆ ง่ายๆ'],['20:00 – 21:00','เขียนบันทึก + พักอิสระ'],['21:00 – 22:00','เตรียมตัวนอน (เพื่อกะเช้าวันจันทร์)'],] },
       dayOffFull: { theme: 'dayOffFull', title: 'วันหยุดปกติ (กะเช้า – เวอร์ชันเต็ม)', rows: [
@@ -313,7 +314,6 @@
     const saveBtn = document.getElementById('saveEdit');
     const cancelBtn = document.getElementById('cancelEdit');
     const editActions = document.getElementById('editActions');
-    /* เพิ่ม: ตัวอ้างอิง container ของตาราง เพื่อใส่แอนิเมชัน */
     const wrap = document.querySelector('.tableWrap');
 
     let editing = false;
@@ -323,7 +323,6 @@
       return `<div class="rowInputs"><input type="text" value="${time}" placeholder="เวลา เช่น 09:00 – 10:00"/> <input type="text" value="${desc}" placeholder="กิจกรรม"/> <button class="smallBtn danger" title="ลบแถว"><svg width="16" height="16" style="vertical-align:-3px"><use href="#i-trash"/></svg> ลบ</button></div>`;
     }
 
-    /* แยกฟังก์ชันวาดเนื้อหา เพื่อเรียกใช้หลัง/ก่อนแอนิเมชัน */
     function applyContent(data){
       if(editing){
         tbodyEl.innerHTML = data.rows.map(([t,a]) => `<tr><td colspan="2">${rowInput(t,a)}</td></tr>`).join('');
@@ -341,19 +340,16 @@
       document.body.setAttribute('data-theme', data.theme);
       titleEl.textContent = data.title;
 
-      /* pulse เล็กๆ ที่ปุ่มที่เลือก */
       const activeBtn = buttons.find(b=> b.dataset.key===key);
       const sw = activeBtn && activeBtn.querySelector('.swatch');
       if(sw){ sw.classList.add('swatchPulse'); setTimeout(()=> sw.classList.remove('swatchPulse'), 450); }
 
-      /* ปรับ aria-current */
       buttons.forEach(b=> b.setAttribute('aria-current', b.dataset.key===key ? 'page' : 'false'));
       localStorage.setItem('scheduleKey', key);
       location.hash = key;
 
-      /* เล่นแอนิเมชัน: leave -> เปลี่ยนเนื้อหา -> enter */
       wrap.classList.remove('anim-enter-fade','anim-enter-card');
-      wrap.classList.add('anim-leave-card'); // ใช้สไตล์ Card ปกติ (นุ่มๆ)
+      wrap.classList.add('anim-leave-card');
       wrap.addEventListener('animationend', ()=>{
         wrap.classList.remove('anim-leave-card');
         applyContent(data);
@@ -367,7 +363,6 @@
     function enterEdit(){
       editing = true;
       editBtn.innerHTML = '<svg width="18" height="18" style="vertical-align:-3px"><use href="#i-edit"/></svg> โหมดแก้ไข';
-      /* ไม่เล่นแอนิเมชันเวลาสลับโหมดแก้ไข เพื่อให้โฟกัสกรอกข้อมูล */
       const data = schedules[currentKey]; applyContent(data); editActions.style.display='flex';
     }
     function exitEdit(){
@@ -376,15 +371,12 @@
       const data = schedules[currentKey]; applyContent(data); editActions.style.display='none';
     }
 
-    // Button handlers
     buttons.forEach(btn=>{
       btn.addEventListener('click', ()=> { if(editing) exitEdit(); render(btn.dataset.key); });
       btn.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); if(editing) exitEdit(); render(btn.dataset.key); } });
     });
-
     editBtn.addEventListener('click', ()=>{ editing ? exitEdit() : enterEdit(); });
 
-    // Delegate delete button inside tbody
     tbodyEl.addEventListener('click', (e)=>{
       if(!editing) return;
       const btn = e.target.closest('button');
@@ -412,7 +404,6 @@
         return [t.value.trim(), a.value.trim()];
       }).filter(r=> r[0]!=='' || r[1]!=='' );
       schedules[currentKey].rows = rows;
-      // persist only rows per key
       const minimal = JSON.parse(localStorage.getItem('customSchedules')||'{}');
       minimal[currentKey] = { rows };
       localStorage.setItem('customSchedules', JSON.stringify(minimal));
@@ -438,7 +429,7 @@
     const savedKey = localStorage.getItem('scheduleKey');
     const initialFromHash = location.hash?.replace('#','');
     const initial = (initialFromHash && defaultSchedules[initialFromHash]) ? initialFromHash : (savedKey && defaultSchedules[savedKey] ? savedKey : 'morningOT');
-    /* แสดงทันทีรอบแรกโดยไม่เล่น leave เพื่อไม่วูบ */
+
     (function firstPaint(k){
       const data = schedules[k];
       document.body.setAttribute('data-theme', data.theme);
