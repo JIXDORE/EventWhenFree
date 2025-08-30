@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ตารางกิจกรรม | เวอร์ชันเว็บ</title>
+  <style>
+    :root{ --dur:280ms; --ease:cubic-bezier(.4,0,.2,1); }
+    /* Animations */
+    .anim-leave-fade{ animation: leaveFade var(--dur) var(--ease) forwards; }
+    .anim-enter-fade{ animation: enterFade var(--dur) var(--ease) forwards; }
+    .anim-leave-card{ animation: leaveLift var(--dur) var(--ease) forwards; }
+    .anim-enter-card{ animation: enterDrop var(--dur) var(--ease) forwards; }
+    @keyframes leaveFade{ from{opacity:1;transform:translateY(0);} to{opacity:0;transform:translateY(12px);} }
+    @keyframes enterFade{ from{opacity:0;transform:translateY(-8px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes leaveLift{ from{opacity:1;transform:translateY(0) scale(1);} to{opacity:0;transform:translateY(10px) scale(.98);} }
+    @keyframes enterDrop{ from{opacity:0;transform:translateY(-8px) scale(.98);} to{opacity:1;transform:translateY(0) scale(1);} }
+    .swatchPulse::after{ content:""; position:absolute; inset:0; border-radius:12px; background: currentColor; opacity:.15;
+      animation:pulse1 450ms ease-out; }
+    @keyframes pulse1{ from{transform:scale(1);opacity:.25;} to{transform:scale(1.25);opacity:0;} }
+
+    body{font-family:sans-serif; margin:0; background:#f5f7ff;}
+    header{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#eee;}
+    .wrap{max-width:1000px;margin:auto;padding:10px;}
+    .card{padding:12px;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.1);border-radius:12px;}
+    table{width:100%;border-collapse:collapse;}
+    th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;}
+    select,button{padding:6px 10px;margin-left:5px;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1 style="margin:0">ตารางกิจกรรม</h1>
+      <div>
+        <label>Animation:
+          <select id="animSelect">
+            <option value="fade">Fade & Slide</option>
+            <option value="card">Card Swap</option>
+            <option value="pulse">Pulse on Icon</option>
+            <option value="none">None</option>
+          </select>
+        </label>
+        <button onclick="render('morning')">กะเช้า</button>
+        <button onclick="render('night')">กะดึก</button>
+      </div>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="card">
+      <div class="tableWrap">
+        <table>
+          <thead><tr><th>เวลา</th><th>กิจกรรม</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script>
+    const tbody=document.getElementById('tbody');
+    const wrap=document.querySelector('.tableWrap');
+    const animSelect=document.getElementById('animSelect');
+    let animMode=localStorage.getItem('animMode')||'fade';
+    animSelect.value=animMode;
+
+    const schedules={
+      morning:{rows:[["04:25–05:30","เตรียมตัวไปทำงาน"],["06:00–18:15","ทำงาน"],["19:30","สมาธิ + โปรเจกต์เล็ก"]]},
+      night:{rows:[["16:25–17:30","เตรียมตัวไปทำงาน"],["18:00–06:15","ทำงาน"],["07:20","สมาธิ"],["07:35","โปรเจกต์เล็ก/บันทึก"]]}
+    };
+    let currentKey='morning';
+
+    function render(key){
+      const data=schedules[key]; if(!data) return; currentKey=key;
+      if(animMode==='pulse'){
+        wrap.classList.add('swatchPulse');
+        setTimeout(()=>wrap.classList.remove('swatchPulse'),450);
+        tbody.innerHTML=data.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+        return;
+      }
+      const leaveClass=animMode==='fade'?'anim-leave-fade':animMode==='card'?'anim-leave-card':'';
+      const enterClass=animMode==='fade'?'anim-enter-fade':animMode==='card'?'anim-enter-card':'';
+      if(leaveClass){
+        wrap.classList.add(leaveClass);
+        wrap.addEventListener('animationend',()=>{
+          wrap.classList.remove(leaveClass);
+          tbody.innerHTML=data.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+          wrap.classList.add(enterClass);
+          wrap.addEventListener('animationend',()=>wrap.classList.remove(enterClass),{once:true});
+        },{once:true});
+      }else{
+        tbody.innerHTML=data.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+      }
+    }
+    render(currentKey);
+    animSelect.addEventListener('change',()=>{animMode=animSelect.value;localStorage.setItem('animMode',animMode);});
+  </script>
+</body>
+</html>
