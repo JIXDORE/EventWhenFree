@@ -211,29 +211,33 @@
     <aside class="side" aria-label="สลับตารางแบบเดสก์ท็อป">
       <button class="iconBtn" data-key="morningOT" aria-current="page">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-sun"/></svg></div>
-        <div class="label"><strong>กะเช้า (มีโอที)</strong><span>เลิก 18:15</span></div>
+        <div class="label"><strong>กะเช้า (มีโอที)</strong></div>
       </button>
       <button class="iconBtn" data-key="morningNoOT">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-sun"/></svg></div>
-        <div class="label"><strong>กะเช้า (ไม่มีโอที)</strong><span>เลิก 14:15</span></div>
+        <div class="label"><strong>กะเช้า (ไม่มีโอที)</strong></div>
       </button>
       <button class="iconBtn" data-key="night">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-moon"/></svg></div>
-        <div class="label"><strong>กะดึก</strong><span>18:00 – 06:15</span></div>
+        <div class="label"><strong>กะดึก</strong></div>
+      </button>
+      <button class="iconBtn" data-key="night">
+        <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-moon"/></svg></div>
+        <div class="label"><strong>กะดึก (ไม่มีโอที)</strong></div>
       </button>
       <button class="iconBtn" data-key="sundayLight">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-feather"/></svg></div>
-        <div class="label"><strong>อาทิตย์ (เบา)</strong><span>หลังเลิกกะดึก</span></div>
+        <div class="label"><strong>วันหยุด (กะดึก)</strong></div>
       </button>
       <button class="iconBtn" data-key="dayOffFull">
         <div class="swatch"><svg width="22" height="22" aria-hidden="true"><use href="#i-book"/></svg></div>
-        <div class="label"><strong>วันหยุดปกติ</strong><span>เวอร์ชันเต็ม</span></div>
+        <div class="label"><strong>วันหยุด (กะเช้า)</strong><span>เวอร์ชันเต็ม</span></div>
       </button>
     </aside>
 
     <section class="card" id="content" aria-live="polite">
       <div class="titleRow">
-        <h2 id="title">กะเช้า (มีโอที 18:15)</h2>
+        <h2 id="title">กะเช้า (มีโอที)</h2>
         <div style="display:flex; gap:8px">
           <button class="ghost editBtn" id="editBtn"><svg width="18" height="18" style="vertical-align:-3px"><use href="#i-edit"/></svg> แก้ไข</button>
         </div>
@@ -264,10 +268,13 @@
     <button class="iconBtn" data-key="night" aria-label="กะดึก">
       <div class="swatch"><svg width="22" height="22"><use href="#i-moon"/></svg></div>
     </button>
-    <button class="iconBtn" data-key="sundayLight" aria-label="วันอาทิตย์ เบา">
+    <button class="iconBtn" data-key="night" aria-label="กะดึก ไม่มีโอที">
+      <div class="swatch"><svg width="22" height="22"><use href="#i-moon"/></svg></div>
+    </button>
+    <button class="iconBtn" data-key="sundayLight" aria-label="หยุดกะดึก">
       <div class="swatch"><svg width="22" height="22"><use href="#i-feather"/></svg></div>
     </button>
-    <button class="iconBtn" data-key="dayOffFull" aria-label="วันหยุดปกติ">
+    <button class="iconBtn" data-key="dayOffFull" aria-label="หยุดกะเช้า">
       <div class="swatch"><svg width="22" height="22"><use href="#i-book"/></svg></div>
     </button>
   </nav>
@@ -282,7 +289,9 @@
         ['04:25 – 05:30','เตรียมตัวไปทำงาน'],['06:00 – 18:15','ทำงาน'],['19:15','ถึงห้อง'],['19:30 – 19:45','สมาธิ'],['19:50 – 20:10','โปรเจกต์เล็ก (แต่งเรื่อง/โค้ด/ฝึกพูด สลับวัน)'],['20:10 – 20:30','เกม/พัก'],['20:30 – 20:45','เขียนบันทึก'],['21:00 เป็นต้นไป','พัก/นอน'],] },
       morningNoOT: { theme: 'morningNoOT', title: 'กะเช้า (ไม่มีโอที 14:15)', rows: [
         ['04:25 – 05:30','เตรียมตัวไปทำงาน'],['06:00 – 14:15','ทำงาน'],['15:15','ถึงห้อง'],['15:30 – 15:45','สมาธิ'],['15:50 – 16:20','โปรเจกต์เล็ก (แต่งเรื่อง/โค้ด/ฝึกพูด)'],['16:20 – 17:00','พัก/เกม'],['17:00 – 17:30','ฝึกพูด (สั้นๆ)'],['17:30 – 18:00','เกม/พักสายตา'],['18:00 – 18:30','VS Code / โค้ดเล็กๆ'],['18:30 – 19:00','กินข้าว/พัก'],['19:00 – 19:30','เขียนบันทึก'],['19:30 เป็นต้นไป','พัก/กิจกรรมเบา → เข้านอน'],] },
-      night: { theme: 'night', title: 'กะดึก (18:00 – 06:15)', rows: [
+      nightOT: { theme: 'night', title: 'กะดึก (18:00 – 06:15)', rows: [
+        ['16:25 – 17:30','เตรียมตัวไปทำงาน'],['18:00 – 06:15','ทำงาน'],['07:15','ถึงห้อง'],['07:20 – 07:35','สมาธิ'],['07:35 – 07:55','โปรเจกต์เล็ก (บันทึก/จดไอเดีย 2–3 บรรทัด)'],['08:00 – 08:30','อาบน้ำ/เตรียมตัวนอน'],['08:30 – 15:00','นอนยาว'],['15:00 – 16:00','ตื่น/พัก/กินข้าว'],['16:00 – 18:00','พักผ่อนเบาๆ (ฟังเพลง เกมมือถือ)'],['18:00 เป็นต้นไป','วันธรรมดา → เริ่มกะดึกใหม่ | วันเสาร์ → เข้าตารางวันอาทิตย์'],] },
+       nightNoOT: { theme: 'night', title: 'กะดึก (18:00 – 06:15)', rows: [
         ['16:25 – 17:30','เตรียมตัวไปทำงาน'],['18:00 – 06:15','ทำงาน'],['07:15','ถึงห้อง'],['07:20 – 07:35','สมาธิ'],['07:35 – 07:55','โปรเจกต์เล็ก (บันทึก/จดไอเดีย 2–3 บรรทัด)'],['08:00 – 08:30','อาบน้ำ/เตรียมตัวนอน'],['08:30 – 15:00','นอนยาว'],['15:00 – 16:00','ตื่น/พัก/กินข้าว'],['16:00 – 18:00','พักผ่อนเบาๆ (ฟังเพลง เกมมือถือ)'],['18:00 เป็นต้นไป','วันธรรมดา → เริ่มกะดึกใหม่ | วันเสาร์ → เข้าตารางวันอาทิตย์'],] },
       sundayLight: { theme: 'sundayLight', title: 'วันอาทิตย์ (หลังเลิกกะดึก – เบา)', rows: [
         ['07:15 – 07:30','สมาธิสั้นๆ + อาบน้ำ'],['07:30 – 14:30','นอนยาวพักร่าง'],['14:30 – 15:00','ตื่น/กินข้าว'],['15:00 – 16:00','กิจกรรมเบาๆ (ยืดเส้น, ฟังเพลง, เกม)'],['16:00 – 17:00','แต่งเรื่องเล็กๆ (เพิ่มฉากเดียวหรือไอเดียสั้นๆ)'],['17:00 – 18:00','เกม/พัก'],['18:00 – 19:00','ฝึกพูดสั้นๆ 2–3 ประโยค'],['19:00 – 20:00','VS Code / โค้ดเล็กๆ ง่ายๆ'],['20:00 – 21:00','เขียนบันทึก + พักอิสระ'],['21:00 – 22:00','เตรียมตัวนอน (เพื่อกะเช้าวันจันทร์)'],] },
